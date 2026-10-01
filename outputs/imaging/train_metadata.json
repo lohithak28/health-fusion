@@ -1,0 +1,41 @@
+{
+    "dataset_root": "C:\\Users\\lohit\\Downloads\\archive\\chest_xray",
+    "device": "cpu",
+    "random_seed": 42,
+    "batch_size": 32,
+    "stage1_epochs": 1,
+    "stage2_epochs": 1,
+    "stage1_lr": 0.001,
+    "stage2_backbone_lr": 5e-05,
+    "stage2_classifier_lr": 0.0002,
+    "weight_decay": 0.0001,
+    "best_epoch": 2,
+    "best_val_f1": 0.8056680161943319,
+    "total_time_seconds": 130.43924474716187,
+    "history": {
+        "train_loss": [
+            0.5947408596674602,
+            0.43464052081108095
+        ],
+        "train_acc": [
+            0.7770833333333333,
+            0.8604166666666667
+        ],
+        "train_f1": [
+            0.6681634630915845,
+            0.837869721061308
+        ],
+        "val_loss": [
+            0.5389204025268555,
+            0.4742850661277771
+        ],
+        "val_acc": [
+            0.625,
+            0.8125
+        ],
+        "val_f1": [
+            0.5636363636363637,
+            0.8056680161943319
+        ]
+    }
+}
