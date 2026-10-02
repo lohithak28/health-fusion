@@ -26,7 +26,12 @@ def main():
     # Load ECG index, EHR features, and admission outcomes.
     ecg = pd.read_csv(ECG_INDEX_PATH)
     ehr = pd.read_csv(EHR_FEATURES_PATH)
-    admissions = pd.read_csv(EHR_DIR / "hosp" / "admissions.csv")
+    admissions_path = EHR_DIR / "hosp" / "admissions.csv"
+
+    if not admissions_path.exists():
+        admissions_path = EHR_DIR / "hosp" / "admissions.csv.gz"
+
+    admissions = pd.read_csv(admissions_path)
 
     # Parse timestamps.
     ecg["ecg_time"] = pd.to_datetime(

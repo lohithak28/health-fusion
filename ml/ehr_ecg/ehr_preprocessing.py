@@ -8,10 +8,17 @@ from .config import EHR_HOSP_DIR, EHR_ICU_DIR
 
 def load_table(file_path: Path) -> pd.DataFrame:
     """Load a MIMIC-IV CSV or CSV.GZ table."""
-    if not file_path.exists():
-        raise FileNotFoundError(f"Table not found: {file_path}")
+    if file_path.exists():
+        return pd.read_csv(file_path, low_memory=False)
 
-    return pd.read_csv(file_path, low_memory=False)
+    gz_path = file_path.with_suffix(file_path.suffix + ".gz")
+
+    if gz_path.exists():
+        return pd.read_csv(gz_path, low_memory=False)
+
+    raise FileNotFoundError(
+        f"Table not found: {file_path} or {gz_path}"
+    )
 
 
 def load_patients() -> pd.DataFrame:
