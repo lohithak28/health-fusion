@@ -1,0 +1,5 @@
+Model,Accuracy,Balanced accuracy,Precision,Recall,F1-score,AUROC
+Majority baseline,0.87097,0.5,0.0,0.0,0.0,0.5
+EHR-only,0.129,0.5,0.129,1.0,0.2286,0.7454
+ECG-only,0.6129,0.5648,0.1667,0.5,0.25,0.537
+EHR-ECG fusion,0.80645,0.46296,0.0,0.0,0.0,0.46296

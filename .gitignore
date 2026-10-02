@@ -1,1 +1,28 @@
-models/imaging/*.pth 
+
+# Python virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Secrets
+.env
+.env.*
+
+# Raw datasets
+archive/
+data/
+
+# Ignore generated features by default
+features/*
+
+# Keep trained models and comparison results
+!features/models/
+!features/models/*.pt
+!features/results/
+!features/results/*.csv
+!features/results/*.png
+
+# Imaging model weights
+models/imaging/*.pth
