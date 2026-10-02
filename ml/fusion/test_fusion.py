@@ -1,6 +1,6 @@
 import torch
 
-from fusion_model import MultimodalFusion
+from ml.fusion.fusion_model import MultimodalFusion
 
 
 # Fake feature dimensions for testing
