@@ -92,7 +92,7 @@ export const App: React.FC = () => {
       return;
     }
     if (!ecgFile && sampleEcgIndex === null) {
-      setError('12-lead ECG waveform is required (upload .npy/.json or select a sample).');
+      setError('ECG data is required (upload .npy/.json or select a sample).');
       return;
     }
 
@@ -120,7 +120,7 @@ export const App: React.FC = () => {
       const prediction = await api.analyzePatient(formData);
       setResult(prediction);
     } catch (err: any) {
-      setError(err.message || 'Multimodal prediction failed');
+      setError(err.message || 'Analysis failed');
     } finally {
       setLoading(false);
     }
@@ -133,13 +133,6 @@ export const App: React.FC = () => {
       <main className="container" style={{ flex: 1 }}>
         {activeTab === 'dashboard' && (
           <div>
-            {/* Introductory Instruction Banner */}
-            <div className="alert-banner">
-              <span>
-                Provide multimodal patient data below. You may upload custom clinical files or click pre-validated repository samples for immediate 1-click evaluation.
-              </span>
-            </div>
-
             <form onSubmit={handleAnalyze}>
               {/* Three Modality Input Cards */}
               <div className="grid-3">
@@ -194,7 +187,7 @@ export const App: React.FC = () => {
                   onClick={handleReset}
                   disabled={loading}
                 >
-                  <RotateCcw size={16} />
+                  <RotateCcw size={15} />
                   <span>Reset Inputs</span>
                 </button>
 
@@ -202,17 +195,17 @@ export const App: React.FC = () => {
                   type="submit"
                   className="btn btn-primary"
                   disabled={loading}
-                  style={{ minWidth: '220px' }}
+                  style={{ minWidth: '180px' }}
                 >
                   {loading ? (
                     <>
-                      <Loader2 size={18} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
-                      <span>Fusing Modalities...</span>
+                      <Loader2 size={16} className="animate-spin" style={{ animation: 'spin 1s linear infinite' }} />
+                      <span>Analyzing...</span>
                     </>
                   ) : (
                     <>
-                      <Play size={18} />
-                      <span>Run Multimodal Analysis</span>
+                      <Play size={16} />
+                      <span>Analyze</span>
                     </>
                   )}
                 </button>
@@ -222,18 +215,18 @@ export const App: React.FC = () => {
             {/* Error Message */}
             {error && (
               <div style={{
-                marginTop: '1.5rem',
+                marginTop: '1.25rem',
                 background: '#fef2f2',
                 border: '1px solid #fecaca',
                 color: '#b91c1c',
-                padding: '0.85rem 1rem',
+                padding: '0.8rem 1rem',
                 borderRadius: 'var(--radius-sm)',
                 fontSize: '0.85rem',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '0.5rem',
               }}>
-                <AlertCircle size={18} />
+                <AlertCircle size={17} />
                 <span>{error}</span>
               </div>
             )}
@@ -243,14 +236,6 @@ export const App: React.FC = () => {
               <ResultDisplay
                 result={result}
                 patientData={patientData}
-                cxrFileName={cxrFile?.name || selectedSamplePath?.split(/[/\\]/).pop()}
-                ecgSummary={
-                  ecgFile
-                    ? ecgFile.name
-                    : sampleEcgIndex !== null
-                    ? `Sample ECG Waveform #${sampleEcgIndex} (12×1000)`
-                    : undefined
-                }
               />
             )}
           </div>
@@ -274,7 +259,7 @@ export const App: React.FC = () => {
         color: 'var(--text-muted)',
         background: '#ffffff',
       }}>
-        HealthFusion-Transformer • Academic Research Prototype • Cross-Attention Multimodal Decision Support
+        HealthFusion • Clinical Decision Support Demonstration Prototype
       </footer>
     </div>
   );

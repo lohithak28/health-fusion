@@ -25,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   }, []);
 
   return (
-    <header style={{ background: '#ffffff', borderBottom: '1px solid var(--border-color)', marginBottom: '2rem' }}>
+    <header style={{ background: '#ffffff', borderBottom: '1px solid var(--border-color)', marginBottom: '1.75rem' }}>
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1rem 1.5rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
           
@@ -39,19 +39,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 2px 4px rgba(2, 132, 199, 0.25)'
+              boxShadow: '0 2px 4px rgba(2, 132, 199, 0.2)'
             }}>
-              <Activity size={26} strokeWidth={2.4} />
+              <Activity size={24} strokeWidth={2.4} />
             </div>
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <h1 style={{ fontSize: '1.4rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
-                  HealthFusion
-                </h1>
-                <span className="badge badge-primary">Transformer</span>
-              </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                Multimodal Clinical Decision Support System
+              <h1 style={{ fontSize: '1.35rem', fontWeight: '700', letterSpacing: '-0.02em', color: 'var(--text-primary)' }}>
+                HealthFusion
+              </h1>
+              <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
+                Clinical Decision Support Demo
               </p>
             </div>
           </div>
@@ -60,22 +57,22 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.82rem' }}>
               <span style={{
-                width: '9px',
-                height: '9px',
+                width: '8px',
+                height: '8px',
                 borderRadius: '50%',
                 backgroundColor: backendHealthy === true ? '#10b981' : backendHealthy === false ? '#ef4444' : '#f59e0b',
                 display: 'inline-block'
               }} />
               <span style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>
-                {backendHealthy === true ? 'API Connected' : backendHealthy === false ? 'API Offline' : 'Checking API...'}
+                {backendHealthy === true ? 'System Ready' : backendHealthy === false ? 'Service Offline' : 'Connecting...'}
               </span>
             </div>
 
-            <nav style={{ display: 'flex', gap: '0.4rem', background: '#f1f5f9', padding: '0.3rem', borderRadius: '8px' }}>
+            <nav style={{ display: 'flex', gap: '0.35rem', background: '#f1f5f9', padding: '0.25rem', borderRadius: '8px' }}>
               <button
                 onClick={() => setActiveTab('dashboard')}
                 style={{
-                  padding: '0.4rem 0.9rem',
+                  padding: '0.4rem 0.85rem',
                   fontSize: '0.85rem',
                   fontWeight: activeTab === 'dashboard' ? 600 : 500,
                   border: 'none',
@@ -85,12 +82,12 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   boxShadow: activeTab === 'dashboard' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
                 }}
               >
-                Dashboard
+                Analysis
               </button>
               <button
                 onClick={() => setActiveTab('history')}
                 style={{
-                  padding: '0.4rem 0.9rem',
+                  padding: '0.4rem 0.85rem',
                   fontSize: '0.85rem',
                   fontWeight: activeTab === 'history' ? 600 : 500,
                   border: 'none',
@@ -105,7 +102,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
               <button
                 onClick={() => setActiveTab('about')}
                 style={{
-                  padding: '0.4rem 0.9rem',
+                  padding: '0.4rem 0.85rem',
                   fontSize: '0.85rem',
                   fontWeight: activeTab === 'about' ? 600 : 500,
                   border: 'none',
@@ -115,24 +112,12 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   boxShadow: activeTab === 'about' ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
                 }}
               >
-                Architecture & Limitations
+                About & Limitations
               </button>
             </nav>
           </div>
 
         </div>
-      </div>
-
-      {/* Safety / Clinical Research Disclaimer Banner */}
-      <div style={{
-        background: '#f8fafc',
-        borderTop: '1px solid var(--border-color)',
-        padding: '0.45rem 1.5rem',
-        fontSize: '0.78rem',
-        color: 'var(--text-muted)',
-        textAlign: 'center'
-      }}>
-        Experimental prototype for research and evaluation purposes only. Outputs do not constitute a definitive medical diagnosis.
       </div>
     </header>
   );

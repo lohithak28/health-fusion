@@ -37,27 +37,25 @@ export const PatientForm: React.FC<PatientFormProps> = ({ data, onChange, disabl
     <div className="card">
       <div className="card-title">
         <User size={18} style={{ color: 'var(--primary)' }} />
-        <span>Electronic Health Record (EHR)</span>
+        <span>Patient Information</span>
       </div>
 
       <div className="form-group">
         <label className="form-label" htmlFor="patient-id">
-          Patient Identifier <span style={{ color: 'var(--danger)' }}>*</span>
+          Patient ID <span style={{ color: 'var(--danger)' }}>*</span>
         </label>
-        <div style={{ position: 'relative' }}>
-          <input
-            id="patient-id"
-            className="form-input"
-            type="text"
-            placeholder="e.g. PATIENT_001"
-            value={data.patient_id}
-            onChange={handleIdChange}
-            disabled={disabled}
-            maxLength={64}
-          />
-        </div>
+        <input
+          id="patient-id"
+          className="form-input"
+          type="text"
+          placeholder="e.g. PATIENT_001"
+          value={data.patient_id}
+          onChange={handleIdChange}
+          disabled={disabled}
+          maxLength={64}
+        />
         <div style={{ display: 'flex', gap: '0.4rem', marginTop: '0.4rem', alignItems: 'center' }}>
-          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Quick demo IDs:</span>
+          <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Quick demo:</span>
           <button
             type="button"
             className="btn btn-secondary"
@@ -143,18 +141,6 @@ export const PatientForm: React.FC<PatientFormProps> = ({ data, onChange, disabl
             </button>
           </div>
         </div>
-      </div>
-
-      <div style={{
-        marginTop: '0.5rem',
-        padding: '0.6rem 0.8rem',
-        background: '#f8fafc',
-        borderRadius: 'var(--radius-sm)',
-        fontSize: '0.78rem',
-        color: 'var(--text-muted)',
-        border: '1px dashed var(--border-color)'
-      }}>
-        EHR inputs are normalized into the EHR feature vector [1, 2] and integrated into the cross-attention fusion layer.
       </div>
     </div>
   );

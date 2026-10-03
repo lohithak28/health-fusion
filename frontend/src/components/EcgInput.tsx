@@ -47,7 +47,7 @@ export const EcgInput: React.FC<EcgInputProps> = ({
     <div className="card">
       <div className="card-title">
         <HeartPulse size={18} style={{ color: 'var(--primary)' }} />
-        <span>12-Lead ECG Sensor Waveform</span>
+        <span>ECG Data</span>
       </div>
 
       {/* Input Selection Area */}
@@ -58,19 +58,19 @@ export const EcgInput: React.FC<EcgInputProps> = ({
             style={{
               border: '2px dashed var(--border-color)',
               borderRadius: 'var(--radius-md)',
-              padding: '1.25rem 1rem',
+              padding: '1.5rem 1rem',
               textAlign: 'center',
               background: '#f8fafc',
               cursor: disabled ? 'not-allowed' : 'pointer',
               transition: 'all 0.15s ease',
             }}
           >
-            <Upload size={28} style={{ color: 'var(--primary)', marginBottom: '0.35rem' }} />
-            <p style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }}>
-              Upload 12-Lead ECG File
+            <Upload size={30} style={{ color: 'var(--primary)', marginBottom: '0.4rem' }} />
+            <p style={{ fontWeight: 600, fontSize: '0.92rem', color: 'var(--text-primary)' }}>
+              Upload ECG Recording
             </p>
-            <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-              Accepts .npy or .json (must be exactly 12 leads × 1000 samples)
+            <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
+              Select ECG recording file (.npy, .json)
             </p>
             <input
               ref={fileInputRef}
@@ -84,11 +84,11 @@ export const EcgInput: React.FC<EcgInputProps> = ({
 
           {availableIndices.length > 0 && (
             <div>
-              <p style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>
-                Or select a verified real MIMIC-IV ECG waveform from the repository:
+              <p style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.35rem' }}>
+                Or select a sample recording:
               </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-                {availableIndices.map((idx) => (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem' }}>
+                {availableIndices.map((idx, index) => (
                   <button
                     key={idx}
                     type="button"
@@ -96,15 +96,15 @@ export const EcgInput: React.FC<EcgInputProps> = ({
                     disabled={disabled}
                     className="btn btn-secondary"
                     style={{
-                      padding: '0.4rem 0.75rem',
-                      fontSize: '0.78rem',
+                      padding: '0.35rem 0.65rem',
+                      fontSize: '0.75rem',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.35rem',
+                      gap: '0.3rem',
                     }}
                   >
-                    <HeartPulse size={14} style={{ color: 'var(--primary)' }} />
-                    <span>Real ECG #{idx} (12×1000)</span>
+                    <HeartPulse size={13} style={{ color: 'var(--primary)' }} />
+                    <span>Sample ECG {index + 1}</span>
                   </button>
                 ))}
               </div>
@@ -115,37 +115,38 @@ export const EcgInput: React.FC<EcgInputProps> = ({
         <div style={{
           border: '1px solid var(--border-color)',
           borderRadius: 'var(--radius-md)',
-          padding: '1rem',
+          padding: '0.85rem',
           background: '#ffffff',
         }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
               <div style={{
                 background: 'var(--primary-light)',
-                padding: '0.6rem',
+                padding: '0.55rem',
                 borderRadius: 'var(--radius-sm)',
                 color: 'var(--primary)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-                <FileCode size={22} />
+                <FileCode size={20} />
               </div>
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <CheckCircle size={16} style={{ color: 'var(--success)' }} />
-                  <span style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }}>
-                    {file ? file.name : `Dataset ECG Waveform Sample #${sampleIndex}`}
+                  <CheckCircle size={15} style={{ color: 'var(--success)' }} />
+                  <span style={{ fontWeight: 600, fontSize: '0.88rem', color: 'var(--text-primary)' }}>
+                    {file
+                      ? file.name
+                      : `Sample ECG ${sampleIndex !== null && availableIndices.indexOf(sampleIndex) >= 0 ? availableIndices.indexOf(sampleIndex) + 1 : 1}`}
                   </span>
                 </div>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
-                  {file
-                    ? `Uploaded custom ECG • ${(file.size / 1024).toFixed(1)} KB`
-                    : `Loaded from features/ecg_waveforms/ecg_waveforms.npy`}
+                <p style={{ fontSize: '0.76rem', color: 'var(--text-muted)', marginTop: '0.1rem' }}>
+                  Ready for analysis
                 </p>
-                <div style={{ marginTop: '0.35rem', display: 'flex', gap: '0.4rem' }}>
-                  <span className="badge badge-success">12 Leads Validated</span>
-                  <span className="badge badge-primary">1000 Samples / Lead</span>
+                <div style={{ marginTop: '0.25rem' }}>
+                  <span className="badge badge-success" style={{ fontSize: '0.7rem', padding: '0.15rem 0.45rem' }}>
+                    ECG Loaded
+                  </span>
                 </div>
               </div>
             </div>
@@ -159,8 +160,8 @@ export const EcgInput: React.FC<EcgInputProps> = ({
                 border: 'none',
                 background: '#f1f5f9',
                 borderRadius: '50%',
-                width: '30px',
-                height: '30px',
+                width: '28px',
+                height: '28px',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -168,23 +169,11 @@ export const EcgInput: React.FC<EcgInputProps> = ({
                 cursor: 'pointer',
               }}
             >
-              <X size={16} />
+              <X size={15} />
             </button>
           </div>
         </div>
       )}
-
-      <div style={{
-        marginTop: '0.8rem',
-        padding: '0.6rem 0.8rem',
-        background: '#f8fafc',
-        borderRadius: 'var(--radius-sm)',
-        fontSize: '0.78rem',
-        color: 'var(--text-muted)',
-        border: '1px dashed var(--border-color)'
-      }}>
-        ECG signals are validated strictly at 12 leads × 1000 temporal samples (12,000 float points) and passed into the cross-attention fusion network.
-      </div>
     </div>
   );
 };

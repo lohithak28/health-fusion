@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Search,
-  Database,
-  Activity,
-  AlertCircle,
-  FolderOpen,
-} from 'lucide-react';
+import { Search, AlertCircle, Clock, FolderOpen } from 'lucide-react';
 import { api } from '../services/api';
 import { PatientDetail, PredictionHistoryItem, UploadedFileItem } from '../types';
 
@@ -34,7 +28,7 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
       ]);
 
       if (!patientData && predsData.length === 0 && filesData.length === 0) {
-        setError(`No records found for Patient ID "${idToFetch}". Run an analysis first or check the ID.`);
+        setError(`No records found for Patient ID "${idToFetch}".`);
         setPatient(null);
         setPredictions([]);
         setFiles([]);
@@ -67,8 +61,8 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
       {/* Search Header */}
       <div className="card">
         <div className="card-title">
-          <Database size={18} style={{ color: 'var(--primary)' }} />
-          <span>Patient Audit & Persistent History Lookup</span>
+          <Search size={18} style={{ color: 'var(--primary)' }} />
+          <span>Patient History</span>
         </div>
 
         <form onSubmit={handleSearch} style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -82,8 +76,7 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
             />
           </div>
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            <Search size={16} />
-            <span>{loading ? 'Searching...' : 'Search Records'}</span>
+            <span>{loading ? 'Searching...' : 'Search'}</span>
           </button>
         </form>
 
@@ -123,7 +116,7 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
         </div>
       )}
 
-      {/* Patient Overview Card */}
+      {/* Patient Overview */}
       {patient && (
         <div className="card" style={{ background: '#f8fafc' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
@@ -133,25 +126,25 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
                 Patient: {patient.patient_id}
               </h3>
               <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-                Demographics: {patient.age} years old • {patient.gender === 'M' ? 'Male' : 'Female'}
+                {patient.age} years old • {patient.gender === 'M' ? 'Male' : 'Female'}
               </p>
             </div>
 
             <div style={{ display: 'flex', gap: '1.5rem', textAlign: 'right' }}>
               <div>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Total Inferences</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Total Analyses</span>
                 <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--primary)' }}>
                   {patient.total_predictions}
                 </span>
               </div>
               <div>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Stored Files</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Uploaded Files</span>
                 <span style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-secondary)' }}>
                   {patient.total_files}
                 </span>
               </div>
               <div>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>First Registered</span>
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'block' }}>Registered</span>
                 <span style={{ fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-secondary)' }}>
                   {new Date(patient.created_at).toLocaleDateString()}
                 </span>
@@ -161,29 +154,28 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
         </div>
       )}
 
-      {/* Predictions Table */}
+      {/* Past Analyses Table */}
       <div className="card">
         <div className="card-title">
-          <Activity size={18} style={{ color: 'var(--primary)' }} />
-          <span>Multimodal Prediction Inferences ({predictions.length})</span>
+          <Clock size={18} style={{ color: 'var(--primary)' }} />
+          <span>Past Analysis Records ({predictions.length})</span>
         </div>
 
         {predictions.length === 0 ? (
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', padding: '1rem 0' }}>
-            No prediction runs recorded yet for this patient ID.
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', padding: '0.75rem 0' }}>
+            No analyses recorded yet for this patient.
           </p>
         ) : (
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.85rem' }}>
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-color)', textAlign: 'left', color: 'var(--text-muted)' }}>
-                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>ID</th>
-                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Timestamp</th>
-                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>CXR (Normal/Pneumonia)</th>
+                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Record #</th>
+                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Date & Time</th>
+                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Chest X-Ray Prediction</th>
                   <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Multimodal Model Output</th>
-                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Probability</th>
+                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Confidence</th>
                   <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Uncertainty Proxy</th>
-                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Artifacts</th>
                 </tr>
               </thead>
               <tbody>
@@ -201,17 +193,21 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
                     <td style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>
                       {p.multimodal_prediction}
                     </td>
-                    <td style={{ padding: '0.65rem 0.5rem' }}>
-                      {(p.multimodal_probability * 100).toFixed(1)}%
-                    </td>
-                    <td style={{ padding: '0.65rem 0.5rem', color: 'var(--text-muted)' }}>
-                      {(p.uncertainty * 100).toFixed(1)}%
-                    </td>
-                    <td style={{ padding: '0.65rem 0.5rem' }}>
-                      <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)' }}>
-                        {p.files?.length || 0} file(s)
-                      </span>
-                    </td>
+                    {(() => {
+                      const isPos = p.multimodal_prediction.toLowerCase().includes('positive') || p.multimodal_prediction.toLowerCase().includes('high');
+                      const conf = isPos ? p.multimodal_probability : 1.0 - p.multimodal_probability;
+                      const unc = 1.0 - conf;
+                      return (
+                        <>
+                          <td style={{ padding: '0.65rem 0.5rem' }}>
+                            {(conf * 100).toFixed(1)}%
+                          </td>
+                          <td style={{ padding: '0.65rem 0.5rem', color: 'var(--text-muted)' }}>
+                            {(unc * 100).toFixed(1)}%
+                          </td>
+                        </>
+                      );
+                    })()}
                   </tr>
                 ))}
               </tbody>
@@ -224,12 +220,12 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
       <div className="card">
         <div className="card-title">
           <FolderOpen size={18} style={{ color: 'var(--primary)' }} />
-          <span>Uploaded Clinical Files & Feature Artifacts ({files.length})</span>
+          <span>Uploaded Clinical Files ({files.length})</span>
         </div>
 
         {files.length === 0 ? (
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', padding: '1rem 0' }}>
-            No uploaded files stored for this patient ID.
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', padding: '0.75rem 0' }}>
+            No files recorded for this patient.
           </p>
         ) : (
           <div style={{ overflowX: 'auto' }}>
@@ -237,9 +233,8 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
               <thead>
                 <tr style={{ borderBottom: '1px solid var(--border-color)', textAlign: 'left', color: 'var(--text-muted)' }}>
                   <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>ID</th>
-                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Type</th>
-                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Original Filename</th>
-                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Stored Safe Path</th>
+                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>File Type</th>
+                  <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>File Name</th>
                   <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Size</th>
                   <th style={{ padding: '0.65rem 0.5rem', fontWeight: 600 }}>Uploaded</th>
                 </tr>
@@ -252,9 +247,6 @@ export const PatientHistory: React.FC<PatientHistoryProps> = ({ initialPatientId
                       <span className="badge badge-primary">{f.file_type.toUpperCase()}</span>
                     </td>
                     <td style={{ padding: '0.65rem 0.5rem', fontWeight: 500 }}>{f.original_filename}</td>
-                    <td style={{ padding: '0.65rem 0.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                      {f.stored_path}
-                    </td>
                     <td style={{ padding: '0.65rem 0.5rem', color: 'var(--text-muted)' }}>
                       {f.file_size ? `${(f.file_size / 1024).toFixed(1)} KB` : 'N/A'}
                     </td>
